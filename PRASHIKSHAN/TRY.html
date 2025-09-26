@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prashiskshan — Academia-Industry Internship Portal (Prototype)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6fbff; --card:#ffffff; --muted:#6b7280; --accent:#0066ff; --accent-2:#00a86b;
+      --glass: rgba(255,255,255,0.75);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#f0f7ff 0%, #f6fbff 60%);color:#0f172a}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#00c1ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    nav{display:flex;gap:18px;align-items:center}
+    a.navlink{color:var(--muted);text-decoration:none;font-weight:600}
+    .cta{background:var(--accent);color:white;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:700}
+
+    .container{max-width:1200px;margin:28px auto;padding:0 20px}
+    .hero{display:grid;grid-template-columns:1fr 460px;gap:28px;align-items:center}
+    .hero-card{background:var(--card);border-radius:16px;padding:26px;box-shadow:0 8px 30px rgba(13,38,76,0.06)}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin-top:8px}
+
+    .features{display:flex;gap:12px;margin-top:18px}
+    .feature{flex:1;padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 6px 18px rgba(12,40,80,0.04)}
+    .feature h4{margin:6px 0}
+
+    /* Internship Cards */
+    .search-row{display:flex;gap:10px;margin-top:18px}
+    .search-row input, .search-row select{flex:1;padding:12px;border-radius:10px;border:1px solid #e6eefb}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 8px 20px rgba(12,40,80,0.04)}
+    .card h3{margin:0;font-size:16px}
+    .muted{color:var(--muted);font-size:13px}
+    .apply-btn{background:var(--accent-2);color:white;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+
+    /* Dashboards */
+    .dashboards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+    .mini{padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff)}
+
+    footer{margin-top:36px;padding:26px 0;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media(max-width:1000px){.hero{grid-template-columns:1fr} .cards{grid-template-columns:repeat(2,1fr)} }
+    @media(max-width:640px){.cards{grid-template-columns:1fr} nav{display:none}}
+
+    /* Toast */
+    .toast{position:fixed;right:18px;bottom:18px;background:#111827;color:white;padding:10px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(2,6,23,0.4);display:none}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center}
+    .modal{background:var(--card);border-radius:12px;padding:18px;width:720px;max-width:94%}
+
+    /* small helpers */
+    .row{display:flex;gap:12px;align-items:center}
+    .chip{background:#eef8ff;padding:6px 8px;border-radius:8px;color:var(--accent);font-weight:700}
+    .muted-small{color:var(--muted);font-size:13px}
+    .pill{padding:6px 8px;border-radius:999px;background:#eef7f3;color:var(--accent-2);font-weight:700}
+
+    /* form */
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type=text],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefb}
+    textarea{min-height:100px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand container">
+      <div class="logo">PS</div>
+      <div>
+        <div style="font-weight:800">Prashiskshan</div>
+        <div style="font-size:12px;color:var(--muted)">Academia — Industry Internship Portal</div>
+      </div>
+    </div>
+    <nav style="margin-right:28px">
+      <a class="navlink" href="#features">Features</a>
+      <a class="navlink" href="#internships">Internships</a>
+      <a class="navlink" href="#how">How it works</a>
+      <a class="cta" href="#" id="open-signup">Get Started</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Bridge the gap between colleges, students and industry — NEP-aligned internships</h1>
+        <p class="lead">Prashiskshan is a lightweight platform to post verified internships, manage credits, auto-generate NEP-compliant logbooks and help students prepare for industry roles.</p>
+
+        <div class="features">
+          <div class="feature">
+            <div class="chip">Student-first</div>
+            <h4>Search & Apply</h4>
+            <p class="muted">Filtered internships, offline-friendly view, personalised recommendations.</p>
+          </div>
+          <div class="feature">
+            <div class="chip">Industry</div>
+            <h4>Post & Manage</h4>
+            <p class="muted">Create internship postings, short-term trials, API-ready dashboards for bulk hiring.</p>
+          </div>
+          <div class="feature">
+            <div class="chip">Faculty</div>
+            <h4>Monitor & Credit</h4>
+            <p class="muted">Track logbooks, approve credits and validate reports to avoid fakes.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <div class="search-row">
+            <input id="searchText" type="text" placeholder="Search internships, skills, roles...">
+            <select id="filterLoc"><option value="">All locations</option><option>Remote</option><option>Hyderabad</option><option>Bengaluru</option><option>Rural - Pilot</option></select>
+            <button class="cta" id="searchBtn">Search</button>
+          </div>
+        </div>
+
+        <div class="cards" id="internshipList">
+          <!-- Internship cards rendered by JS -->
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3>Why Semester 5 internships?</h3>
+        <p class="muted-small">Semester 5 under NEP is ideal for practical exposure — students are academically ready and credit-based internships improve learning outcomes.</p>
+
+        <div style="margin-top:12px">
+          <div class="mini"> <strong>Pilot-ready</strong><div class="muted-small">Lightweight, offline caching, CSV import for colleges</div></div>
+        </div>
+
+        <div style="margin-top:16px">
+          <h4>Quick actions</h4>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="apply-btn" id="sampleApply">Apply sample internship</button>
+            <button class="apply-btn" id="downloadReport">Download sample report</button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <h4>Stakeholders</h4>
+          <ul class="muted-small">
+            <li>Students: profiles, logbooks</li>
+            <li>College: mentorship & credit approval</li>
+            <li>Industry: postings, dashboards</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <section id="how" style="margin-top:20px">
+      <div class="hero-card">
+        <h2>How it works</h2>
+        <div class="dashboards">
+          <div class="mini">
+            <h4>Student flow</h4>
+            <ol class="muted-small">
+              <li>Create profile & upload resume</li>
+              <li>Search & apply to internships</li>
+              <li>Maintain daily logbook (auto-save)</li>
+              <li>Generate NEP-compliant report & submit for credits</li>
+            </ol>
+          </div>
+          <div class="mini">
+            <h4>Industry & Faculty</h4>
+            <ol class="muted-small">
+              <li>Industry posts internships — short trial slots available</li>
+              <li>Faculty monitors progress & signs off credits</li>
+              <li>Analytics used for curriculum improvements</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" style="margin-top:20px">
+      <div class="hero-card">
+        <h2>Feature highlights</h2>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+          <div style="flex:1;min-width:240px" class="feature">
+            <h4>Auto Logbook</h4>
+            <p class="muted-small">Timestamps, daily work items and supervisor comments create a tamper-evident logbook.</p>
+          </div>
+          <div style="flex:1;min-width:240px" class="feature">
+            <h4>Credit Integration</h4>
+            <p class="muted-small">Faculty can map internship outcomes to course credits with one click.</p>
+          </div>
+          <div style="flex:1;min-width:240px" class="feature">
+            <h4>Offline & SMS</h4>
+            <p class="muted-small">Cached internships, apply offline and queue sync when connectivity returns. SMS alerts for rural students.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="internships" style="margin-top:20px">
+      <div class="hero-card">
+        <h2>Open internships</h2>
+        <p class="muted-small">Browse some sample internships posted by partner organisations (demo data).</p>
+        <div class="cards" id="openCards"></div>
+      </div>
+    </section>
+
+    <footer>
+      © Prashiskshan — Built for SIH. Prototype UI & frontend demo. Not a real job board.
+    </footer>
+  </main>
+
+  <div class="toast" id="toast">Sample notification</div>
+
+  <!-- Modal for Sign up / Role selection -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3>Create account</h3>
+      <p class="muted-small">Choose your role to continue</p>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="pill" onclick="signupRole('student')">Student</button>
+        <button class="pill" onclick="signupRole('industry')">Industry</button>
+        <button class="pill" onclick="signupRole('faculty')">Faculty / Admin</button>
+      </div>
+
+      <div id="signupForm" style="margin-top:12px;display:none">
+        <label>Name</label>
+        <input id="nm" type="text" placeholder="Your full name">
+        <label>Email</label>
+        <input id="em" type="text" placeholder="you@example.com">
+        <label>University / Company</label>
+        <input id="org" type="text" placeholder="College or Industry">
+        <div style="display:flex;gap:8px;margin-top:12px"><button class="apply-btn" onclick="completeSignup()">Create</button><button onclick="closeModal()">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo dataset
+    const internships = [
+      {id:1, title:'Frontend Developer Intern', company:'TechSprout Pvt Ltd', loc:'Remote', stipend:'8,000/mo', mode:'Remote', duration:'6 weeks'},
+      {id:2, title:'Data Analyst Intern', company:'Green Analytics', loc:'Hyderabad', stipend:'10,000/mo', mode:'Onsite', duration:'8 weeks'},
+      {id:3, title:'Research Intern - Agritech', company:'FarmBridge', loc:'Rural - Pilot', stipend:'6,000/mo', mode:'Hybrid', duration:'4 weeks'},
+      {id:4, title:'Product Management Intern', company:'UrbanLeap', loc:'Bengaluru', stipend:'12,000/mo', mode:'Onsite', duration:'10 weeks'},
+      {id:5, title:'IoT Prototype Intern', company:'MakeIt Labs', loc:'Remote', stipend:'7,000/mo', mode:'Remote', duration:'5 weeks'},
+      {id:6, title:'Content & Outreach Intern', company:'EduConnect', loc:'Remote', stipend:'5,000/mo', mode:'Remote', duration:'4 weeks'}
+    ];
+
+    // render internships
+    function renderList(list, containerId){
+      const container = document.getElementById(containerId);
+      container.innerHTML='';
+      list.forEach(i=>{
+        const div = document.createElement('div'); div.className='card';
+        div.innerHTML = `<h3>${escapeHtml(i.title)}</h3><div class='muted'>${escapeHtml(i.company)} • ${escapeHtml(i.loc)}</div>
+          <div style='margin-top:10px;display:flex;justify-content:space-between;align-items:center'>
+            <div class='muted-small'>${escapeHtml(i.mode)} • ${escapeHtml(i.duration)}</div>
+            <div style='display:flex;gap:8px'>
+              <button class='apply-btn' onclick='applyIntern(${i.id})'>Apply</button>
+              <button onclick='saveForLater(${i.id})' style='padding:8px;border-radius:8px;border:1px solid #e6eefb'>Save</button>
+            </div>
+          </div>`;
+        container.appendChild(div);
+      })
+    }
+
+    function escapeHtml(s){ return String(s).replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+    renderList(internships,'internshipList');
+    renderList(internships,'openCards');
+
+    // Search demo
+    document.getElementById('searchBtn').addEventListener('click', ()=>{
+      const q = document.getElementById('searchText').value.toLowerCase();
+      const fl = document.getElementById('filterLoc').value;
+      const filtered = internships.filter(i=> (i.title.toLowerCase().includes(q) || i.company.toLowerCase().includes(q)) && (fl==''||i.loc==fl));
+      renderList(filtered,'internshipList');
+      showToast(filtered.length + ' internships found');
+    })
+
+    // Apply flow (localStorage demo)
+    function applyIntern(id){
+      const applied = JSON.parse(localStorage.getItem('applied')||'[]');
+      if(applied.includes(id)) return showToast('Already applied');
+      applied.push(id); localStorage.setItem('applied',JSON.stringify(applied));
+      showToast('Application submitted — awaiting industry review');
+    }
+    function saveForLater(id){
+      const saved = JSON.parse(localStorage.getItem('saved')||'[]'); if(!saved.includes(id)) saved.push(id); localStorage.setItem('saved',JSON.stringify(saved)); showToast('Saved to My List');
+    }
+
+    // sample report generation (NEP-compliant simple template)
+    document.getElementById('downloadReport').addEventListener('click', ()=>{
+      const content = generateReport({name:'Student Name', roll:'UG2025-001', college:'Demo College', supervisor:'Dr. Mentor', duration:'6 weeks', tasks:['Design UI components','Integrate API','Write test cases']});
+      const blob = new Blob([content],{type:'text/plain'}); const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='nep_internship_report.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+      showToast('Report downloaded');
+    })
+
+    function generateReport(data){
+      return `NEP Internship Report\n\nName: ${data.name}\nRoll: ${data.roll}\nCollege: ${data.college}\nSupervisor: ${data.supervisor}\nDuration: ${data.duration}\n\nDaily Logbook (summary):\n` + data.tasks.map((t,i)=>`${i+1}. ${t}`).join('\n') + `\n\nOutcome: Skills gained and learning reflections.`;
+    }
+
+    // Signup modal
+    const modal = document.getElementById('modal'); document.getElementById('open-signup').addEventListener('click', ()=>{modal.style.display='flex'});
+    function closeModal(){modal.style.display='none';document.getElementById('signupForm').style.display='none'}
+    function signupRole(r){ window.signupRole = r; document.getElementById('signupForm').style.display='block'; }
+    function completeSignup(){ const name=document.getElementById('nm').value||'Anonymous'; closeModal(); showToast('Account created for '+name+' ('+window.signupRole+')'); }
+
+    // Sample apply button on aside
+    document.getElementById('sampleApply').addEventListener('click', ()=>applyIntern(1));
+
+    // Toast helper
+    function showToast(msg,duration=2800){ const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',duration); }
+
+    // Simple client-side report generation example for students: create downloadable logbook
+    function createLogbook(name,entries){
+      const content = `Logbook - ${name}\n\n` + entries.map(e=>`${e.date} - ${e.note}`).join('\n');
+      const blob=new Blob([content],{type:'text/plain'}); const url=URL.createObjectURL(blob);
+      const a=document.createElement('a'); a.href=url; a.download='logbook_'+name.replaceAll(' ','_')+'.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    // expose a small API for demo
+    window.prashiskshan = {applyIntern,saveForLater,createLogbook};
+
+  </script>
+</body>
+</html>
